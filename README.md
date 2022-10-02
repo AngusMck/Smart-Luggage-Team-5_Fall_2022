@@ -6,4 +6,4 @@ SabertoothDriver.py file include the motor driver linrary that controls the move
 ObstacleAvoid.py file include the obstacle avoidance algorithm using ultrasonic sensors.
 
 
-======================================================= Bi-weekly Update ============================================================================
+============================== Bi-weekly Update ================================
