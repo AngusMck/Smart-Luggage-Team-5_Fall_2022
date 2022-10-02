@@ -19,7 +19,8 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
 
-
+1. Remodeled app for cleaner UI and efficiency.  
+2. Weather app accurately displays weather for inputed city.  
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
 
@@ -33,6 +34,9 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 2. Replaced the rover's batteries and tested the rover.
 
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
+1. Create vector map of the users journey and display it for the user.  
+2. Obtained raspberry pi and necessary code for gps module.  
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
 
@@ -48,5 +52,8 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 4. Started the integration between the movement system and the tracking system.
 
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
+1. Set up raspberry pi with gps module.  
+2. Finshed testing vector map of users journey.  
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
