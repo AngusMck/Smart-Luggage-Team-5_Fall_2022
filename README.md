@@ -7,3 +7,46 @@ ObstacleAvoid.py file include the obstacle avoidance algorithm using ultrasonic 
 
 
 ============================== Bi-weekly Update ================================
+
+============================== Status Update 1  ================================
+
+------------------------------ Movement and Obstacle Avoidance  - Assem Ahmed ----------------------
+
+1. Integrating IMU unit with my subsystem to measure the distance and rotational angle of the rover.
+2. Witing the code that recieves the (x, y) coordinates of the user from the tracking system.
+
+Note: The IMU was found to be not a good fit later to measure the rotational angle of the rover due to inaccuracy.
+
+------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
+
+
+------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
+
+
+
+============================== Status Update 2  ================================
+
+------------------------------ Movement and Obstacle Avoidance  - Assem Ahmed ----------------------
+
+1. Found out that IMU is not a good fit to measure the rotational angle of the rover due to inaccuracy.
+2. Replaced the rover's batteries and tested the rover.
+
+------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
+------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
+
+
+
+============================== Status Update 3  ================================
+
+------------------------------ Movement and Obstacle Avoidance  - Assem Ahmed ----------------------
+
+1. Tested the obstacle avoidance from 403.
+2. Recalibrated the movement system with the new batteries.
+3. Soldered the ultrasonic sensors circuits on Perf Boards.
+4. Started the integration between the movement system and the tracking system.
+
+------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
+------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
