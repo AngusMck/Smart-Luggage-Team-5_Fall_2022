@@ -23,7 +23,8 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 2. Weather app accurately displays weather for inputed city.  
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
-
+1. Tracking the tag lcation. 
+2. Calculating the distance from the tag to the initiator anchor.
 
 
 ============================== Status Update 2  ================================
@@ -40,7 +41,7 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
 
-
+1. Making improvement in tracking the tag location
 
 ============================== Status Update 3  ================================
 
@@ -57,3 +58,5 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 2. Finshed testing vector map of users journey.  
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
+1. Slowing down the data rate from the the tag.
+2. Improving the accuracy of the tag.
