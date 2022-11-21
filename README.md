@@ -85,18 +85,24 @@ Note: The IMU was found to be not a good fit later to measure the rotational ang
 5. Providing GPS data for the phone app.
 
 ============================== Status Update 5  ================================
+
 Note: All subsystems were fully integrated before status update 5
 
 ------------------------------ Movement and Obstacle Avoidance  - Assem Ahmed ----------------------
+
 1. Fully integrated the movement and obstacle avoidance with the tracking subsystem. 
 2. Implemented a fail-safe solution to prevent the rover from going out of control.
 3. Performed an overall validation for the system.
 4. Continue to perform further validation and optimization to the system.
+
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
+
 1. Successfully obtain latitude and longitude of raspberry pi on the phone.
 2. Able to display the location of the luggage on the map along with the users location.
 3. Continue to optimize and validate app to create the best user experience.
+
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
+
 1. Finished setting the hardware with anchors, tag & gateway.
 2. Collected and calculated the distance between the tag to each anchors and tag position as x, y coordinate.
 3. Verified the correct distance and cleaned the data.
