@@ -119,9 +119,14 @@ Note: System Validation was completed before the final presentation.
 4. Created a top module that receives the (x, y) coordinates of the user and outputs the commands for the rover to follow the user.
 5. Integrated obstacle avoidance with the top module.
 6. Added a buzzer to alarm the user when the rover fails to follow him or is lost.
+
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
 
+
+
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
+
+
 
 ============================== Post Final Presentation  ================================
 
