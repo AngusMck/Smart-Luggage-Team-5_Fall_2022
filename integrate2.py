@@ -16,10 +16,11 @@ motors = SerialMotorControl('/dev/ttyUSB0')
 GPIO.setmode(GPIO.BOARD) ##
 GPIO.setwarnings(False) ##
 
-f = 25 #forward speed  
-t = 70 #turning speed
+f = 25 #forward speed  #outdoor run at f = 25
+t = 40 #turning speed  #outdoor run at f = 65
 
 ##================ Buzzer Function======================##
+
 BUZZER_PIN = 7  # Buzzer pin number
 GPIO.setup(BUZZER_PIN, GPIO.OUT)
 def buzzer(duration, frequency):  # Play different frequencies
@@ -27,8 +28,10 @@ def buzzer(duration, frequency):  # Play different frequencies
     for i in range(duration):
         GPIO.output(BUZZER_PIN, GPIO.HIGH)
         time.sleep(frequency)
-#         GPIO.output(BUZZER_PIN, GPIO.LOW)
-#         time.sleep(frequency)
+        GPIO.output(BUZZER_PIN, GPIO.LOW)
+        time.sleep(frequency)
+
+
 ##================ End of Buzzer Function==================##
 
 
@@ -136,6 +139,7 @@ def start():
     time.sleep(1)
 frontDistance = frontobstacle()
 def navigation():
+    # open the serial connection with RPI
     DWM=serial.Serial(port="/dev/ttyACM0", baudrate=115200)
     print("Connected to " +DWM.name)
     
@@ -147,41 +151,23 @@ def navigation():
     DWM.write("c\r".encode())
     time.sleep(0.09)
     count = 0
-    #print("Inside navigation")
     while True:
         try:
             line=DWM.readline()
-            #print("Inside navigation1")
             if(line):
-                #print("Line1 is",line)
                 parse=line.decode().split(",")
               
                 if parse[0]=="POS":
-                    #pos_AN0=(parse[parse.index("D3A8")+1],parse[parse.index("D3A8")+2],parse[parse.index("D3A8")+3])
-                    
-                    #print(datetime.datetime.now().strftime("%H:%M:%S"),pos_AN0)
-                    
-                    #Filter X coordinate
+                    # get the x-coordinate position
                     x_pos=parse[parse.index("POS")+3]
-                    #print ("Xpos",x_pos, " Type ",type(x_pos))
                     new_x =float(x_pos)
-                    #print ("x coordinate: ",new_x, " Type ",type(new_x))
-                    
-                    #Filter Y coordinate
+                    # get the y-coordinate position
                     y_pos=parse[parse.index("POS")+4]
-                    #print ("Ypos",y_pos, " Type ",type(y_pos))
                     new_y =float(y_pos)
-                    #print ("y coordinate: ",new_y, " Type ",type(new_y))
-                                     
-                    
-                    #Skip if result is nan, break the loop
+                    # check if non-valid value recieved
+                    # if so, skip and recheck for a valid value
                     if (x_pos !="nan"):
                         break
-                                        
-                    #count = count +1
-                    #print("count time inside:" ,count)
-                    
-                    
                 else:
                     print("Distance not calculated: ",line.decode())
         except Exception as ex:
@@ -189,8 +175,7 @@ def navigation():
             break
     DWM.write("\r".encode())
     DWM.close()
-
- 
+    # return the new x,y coordinates
     return new_x,new_y
 ## ^^^^ END of Navigation Function ^^^^ ##
 
@@ -199,7 +184,7 @@ def integrate1():
     start = time.time()
     # Drive 5 minutes - just for testing
     # instead of while True:
-    while start > time.time() - 300: # 300 = 60 seconds * 5
+    while start > time.time() - 600: # 300 = 60 seconds * 5
         # get the x, y coordinates of the rover
         x,y = navigation()
         print("Position is ",x, ",", y)
@@ -207,26 +192,15 @@ def integrate1():
         # calculate the distance between the rover and the user
         Distance = sqrt(x**2 + y**2)
         print("Distance is: ",Distance)
-#         while Distance > 4:
-#             x,y = navigation()
-#             print("Position is ",x, ",", y)
-#             changed = False
-#             Distance = sqrt(x**2 + y**2)
-#             print("Distance is: ",Distance)
-#             buzzer(1, 5)
-#             motors.stop()
-#             x,y = navigation()
-#             print("Position is ",x, ",", y)
-#             changed = False
-#             Distance = sqrt(x**2 + y**2)
-#             print("Distance is: ",Distance)
+        # while distance is greater than 3m, the rover is considered out of range
+        # if the rover is out of range, stop the rover and trigger the buzzer
         while (Distance > 3):
-            print("1")
-            motors.stop()
+            motors.stop() # stop
+            # trigger the buzzer
             for i in range(30):
                 buzzer(1, 5)
                 break
-            time.sleep(2)
+            break
             # get the x, y coordinates of the rover
             x,y = navigation()
             print("Position is ",x, ",", y)
@@ -244,9 +218,6 @@ def integrate1():
                 Distance = sqrt(x**2 + y**2)
                 print("Distance is: ",Distance)
                 break
-#             motors.stop()
-            ##trigger the alarm##
-#             buzzer(1, 5)
             # get the x, y coordinates of the rover
             x,y = navigation()
             print("Position is ",x, ",", y)
@@ -265,7 +236,6 @@ def integrate1():
                     motors.stop()
                     time.sleep(0.2)
                     while (frontobstacle() < 50): ##before moving forward, check the front obstacle
-                        
                         motors.stop()         # stop completely if there is an obstacle
                     motors.drive_forward(f)
                     time.sleep(0.3) ## might need to be removed
@@ -278,7 +248,7 @@ def integrate1():
                     
                     motors.stop()
                     time.sleep(0.2)
-                    while (frontobstacle() < 50): ##before moving forward, check the front obstacle
+                    while (frontobstacle() < 60): ##before moving forward, check the front obstacle
                         motors.stop()          # stop completely if there is an obstacle
                     motors.drive_forward(f)
                     time.sleep(0.3) ## might need to be removed
@@ -291,7 +261,7 @@ def integrate1():
         time.sleep(0.3)
         
         ## Move forward until the distance between the rover and the user is 0.8 m
-        while (Distance > 0.8):
+        while (Distance > 0.8 and frontobstacle() > 60):
             # get the x, y coordinates of the rover
             x,y = navigation()
             print("Position is ",x, ",", y)
@@ -309,28 +279,33 @@ def integrate1():
                 Distance = sqrt(x**2 + y**2)
                 print("Distance is: ",Distance)
                 break
-            
+            x,y = navigation()
+            print("Position is ",x, ",", y)
+            # calculate the distance between the rover and the user
+            Distance = sqrt(x**2 + y**2)
+            print("Distance is: ",Distance)
+            x_new, y_new = navigation()
                 ## when moving forward check for fron
-                while frontobstacle() < 50:
+            while frontobstacle() < 60:
                     motors.stop()
-                    time.sleep(4)
+                    time.sleep(2)
                     # before turning left check for left obstacles
                     # if there is an obstacle stop and trigger the alarm
-                    if (x > 0.4):
+                    if (x > 0):
                         while leftobstacle() < 50:
                             motors.stop()
                             for i in range(30):
                                 buzzer(1, 5)
                                 break
                         motors.stop()
-                        time.sleep(2)
+                        time.sleep(0.5)
                         motors.drive_left(t)
-                        time.sleep(0.8)
+                        time.sleep(1.3)
                         motors.drive_forward(f)
-                        time.sleep(0.3)
+                        time.sleep(0.2)
                     
-                    if (x < -0.4):
-                        # before turning right check for left obstacles
+                    if (x < 0):
+                        # before turning right check for right obstacles
                         # if there is an obstacle stop and trigger the alarm
                         while rightobstacle() < 50:
                             motors.stop()
@@ -338,18 +313,14 @@ def integrate1():
                                 buzzer(1, 5)
                                 break
                         motors.stop()
-                        time.sleep(2)
+                        time.sleep(0.5)
                         motors.drive_right(t)
-                        time.sleep(0.8)
+                        time.sleep(1.3)
                         motors.drive_forward(f)
-                        time.sleep(0.3)
-                    if (x <= -0.4 or x >= 0.4):
-                        motors.stop()
-                        time.sleep(4)
-#             while frontobstacle() < 50:
-#                 motors.stop()
-#                 time.sleep(4)
-                
+                        time.sleep(0.2)
+            #stop if front obstacle is < 50cm
+            while frontobstacle() < 50:
+                motors.stop    
             
             motors.drive_forward(f)
             # get the x, y coordinates of the rover
@@ -392,7 +363,7 @@ def cleargpios():
     GPIO.output(16, False)
     GPIO.output(33, False)
     GPIO.output(38, False)
-    GPIO.output(7, False)
+#    GPIO.output(7, False)
     print("All GPIOs CLEARED")
  
 # The main function to run the program        
