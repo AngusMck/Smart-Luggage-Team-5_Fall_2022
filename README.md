@@ -126,11 +126,11 @@ Note: System Validation was completed before the final presentation.
 6. Added a buzzer to alarm the user when the rover fails to follow him or is lost.
 
 ------------------------------ Phone App - Angus Mckellar ------------------------------------------
-
-
+1. Completed further testing to find any bugs and possible fixes.
+2. Videod working phone app map working along side luggage accurately displaying location of user and luggage.
 
 ------------------------------ Tracking and Navigation  - Tien Le ---------------------------------
-
+1. Worked along side team to help complete necessary tasks.
 
 
 ============================== Post Final Presentation  ================================
